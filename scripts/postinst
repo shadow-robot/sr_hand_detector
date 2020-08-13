@@ -1,0 +1,15 @@
+ 
+#!/bin/sh
+set -e
+ROS_DISTRO=melodic
+EXEC_NAME=sr_hand_detector_node
+case "$1" in
+ configure)
+   setcap cap_net_raw+ep /opt/ros/$ROS_DISTRO/bin/$EXEC_NAME
+   ;;
+ *)
+       echo "postinst called with unknown argument \`$1'" >&2
+       exit 0
+   ;;
+esac
+#DEBHELPER#
