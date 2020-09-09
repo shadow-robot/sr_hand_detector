@@ -103,9 +103,14 @@ void SrHandAutodetect::compose_command_suffix()
     std::string eth_port = hand_serial_and_port_map_.begin()->second;
     YAML::Node hand_info = get_hand_general_info(hand_serial);
     std::string hand_id = get_hand_id(hand_info["side"].as<std::string>());
+    std::string robot_description = ros::package::getPath(hand_info["robot_description"]["package_name"].as<std::string>()) + 
+                                    "/" + ros::package::getPath(hand_info["robot_description"]["relative_path"].as<std::string>());
+    std::string mapping_path = ros::package::getPath(hand_info["mapping_path"]["package_name"].as<std::string>()) + 
+                                    "/" + ros::package::getPath(hand_info["mapping_path"]["relative_path"].as<std::string>());
 
     command_sufix_ = " eth_port:=" + eth_port + " hand_serial:=" +
-      std::to_string(hand_serial) + " hand_id:=" + hand_id;
+      std::to_string(hand_serial) + " hand_id:=" + hand_id + " robot_description:=" +
+      robot_description + " mapping_path:=" + mapping_path;
   }
   else if (2 == number_of_detected_hands_)
   {
