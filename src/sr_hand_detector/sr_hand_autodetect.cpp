@@ -111,6 +111,8 @@ void SrHandAutodetect::compose_command_suffix()
     command_sufix_ = " eth_port:=" + eth_port + " hand_serial:=" +
       std::to_string(hand_serial) + " hand_id:=" + hand_id + " robot_description:=" +
       robot_description + " mapping_path:=" + mapping_path;
+
+    std::cout << "***************" << command_sufix_;
   }
   else if (2 == number_of_detected_hands_)
   {
