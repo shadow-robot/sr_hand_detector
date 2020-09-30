@@ -14,7 +14,7 @@
   <exec_depend>roslib</exec_depend>
   <build_depend>yaml-cpp</build_depend>
   <exec_depend>yaml-cpp</exec_depend>
-  <exec_depend>ethercat_grant</exec_depend>
+  <build_depend>libcap-dev</build_depend>
 
   <test_depend>rostest</test_depend>
 
