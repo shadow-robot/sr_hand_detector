@@ -117,8 +117,10 @@ void SrHandAutodetect::compose_command_suffix()
     }
     if (hand_info["mapping_path"])
     {
-      std::string mapping_path = ros::package::getPath(hand_info["mapping_path"]["package_name"].as<std::string>()) +
-                                                       "/" + hand_info["mapping_path"]["relative_path"].as<std::string>();
+      std::string mapping_path = ros::package::getPath(hand_info["mapping_path"] \
+                                                       ["package_name"].as<std::string>()) +
+                                                       "/" + hand_info["mapping_path"] \
+                                                       ["relative_path"].as<std::string>();
       command_sufix_ += " mapping_path:=" + mapping_path;
     }
   }
@@ -138,8 +140,10 @@ void SrHandAutodetect::compose_command_suffix()
         rh_eth_port = serial_to_port.second;
         if (hand_info["mapping_path"])
         {
-          std::string mapping_path = ros::package::getPath(hand_info["mapping_path"]["package_name"].as<std::string>()) +
-                                      "/" + hand_info["mapping_path"]["relative_path"].as<std::string>();
+          std::string mapping_path = ros::package::getPath(hand_info["mapping_path"] \
+                                                           ["package_name"].as<std::string>()) +
+                                                           "/" + hand_info["mapping_path"] \
+                                                           ["relative_path"].as<std::string>();
           command_sufix_ += " rh_mapping_path:=" + mapping_path;
         }
       }
@@ -149,8 +153,10 @@ void SrHandAutodetect::compose_command_suffix()
         lh_eth_port = serial_to_port.second;
         if (hand_info["mapping_path"])
         {
-          std::string mapping_path = ros::package::getPath(hand_info["mapping_path"]["package_name"].as<std::string>()) +
-                              "/" + hand_info["mapping_path"]["relative_path"].as<std::string>();
+          std::string mapping_path = ros::package::getPath(hand_info["mapping_path"] \
+                                                           ["package_name"].as<std::string>()) +
+                                                           "/" + hand_info["mapping_path"] \
+                                                           ["relative_path"].as<std::string>();
           command_sufix_ += " lh_mapping_path:=" + mapping_path;
         }
       }
