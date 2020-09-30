@@ -31,8 +31,6 @@ If there are no hands detected on any of the ports, a warning will be shown:
 No hand detected on any of the ports!
 ```
 
-Keep in mind that if not using the provided launchfile, you will have to run the node using ethercat_grant or with sudo privileges.
-
 ## sr_hand_autodetect class
 
 This class allows user to run Shadow Robot launch files without providing information like hand serial, ethercat port or hand side. Example usage:
