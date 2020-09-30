@@ -1,0 +1,10 @@
+side: 'right'
+type: 'hand_e_plus'
+name: 'demohand_A'
+biotac: false
+robot_description:
+  package_name: sr_hand_detector
+  relative_path: robot_description.urdf.xacro
+mapping_path:
+  package_name: sr_hand_detector
+  relative_path: mapping.yaml
