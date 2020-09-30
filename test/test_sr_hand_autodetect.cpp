@@ -35,6 +35,24 @@ TEST(SrHandAutodetect, test_run_unimanual)
   ASSERT_EQ(sr_hand_autodetect.command_sufix_, expected_command_sufix);
 }
 
+TEST(SrHandAutodetect, test_run_unimanual_additional_params)
+{
+  std::string expected_command_sufix = " eth_port:=eth0 hand_serial:=634 hand_id:=rh";
+  std::string expected_robot_description_path = ros::package::getPath("sr_hand_detector") +
+                                                  "/robot_description.urdf.xacro";
+  expected_command_sufix += " robot_description:=" + expected_robot_description_path;
+  std::string expected_mapping_path = ros::package::getPath("sr_hand_detector") + "/mapping.yaml";
+  expected_command_sufix += " mapping_path:=" + expected_mapping_path;
+
+  std::string hand_config_path = ros::package::getPath("sr_hand_detector") + "/test/config";
+  std::string detected_hands_file = ros::package::getPath("sr_hand_detector") +
+                                      "/test/config/test_unimanual_additional_params.yaml";
+
+  sr_hand_detector::SrHandAutodetect sr_hand_autodetect(detected_hands_file, hand_config_path);
+  sr_hand_autodetect.run();
+  ASSERT_EQ(sr_hand_autodetect.command_sufix_, expected_command_sufix);
+}
+
 TEST(SrHandAutodetect, test_run_bimanual)
 {
   std::string expected_command_sufix = " eth_port:=eth0_eth1 rh_serial:=1130 lh_serial:=2346";
@@ -49,9 +67,10 @@ TEST(SrHandAutodetect, test_run_bimanual)
 TEST(SrHandAutodetect, test_run_no_hands)
 {
   std::string expected_command_sufix = "";
+  std::string hand_config_path = ros::package::getPath("sr_hand_detector") + "/test/config";
   std::string detected_hands_file = ros::package::getPath("sr_hand_detector") + "/test/config/test_no_hands.yaml";
 
-  sr_hand_detector::SrHandAutodetect sr_hand_autodetect(detected_hands_file);
+  sr_hand_detector::SrHandAutodetect sr_hand_autodetect(detected_hands_file, hand_config_path);
   sr_hand_autodetect.run();
   ASSERT_EQ(sr_hand_autodetect.command_sufix_, expected_command_sufix);
 }
