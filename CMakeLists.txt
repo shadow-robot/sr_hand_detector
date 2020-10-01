@@ -149,7 +149,6 @@ target_link_libraries(${PROJECT_NAME}_node
   ${PROJECT_NAME}
   ${catkin_LIBRARIES}
   yaml-cpp
-  cap
 )
 
 target_link_libraries(sr_hand_autodetect
