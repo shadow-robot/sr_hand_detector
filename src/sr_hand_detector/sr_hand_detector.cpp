@@ -21,7 +21,6 @@
 #include <ifaddrs.h>
 #include <unistd.h>
 #include "sr_hand_detector/sr_hand_detector.h"
-#include <sys/capability.h>
 
 
 namespace sr_hand_detector
