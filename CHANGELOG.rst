@@ -5,6 +5,10 @@ Changelog for package sr_hand_detector
 Forthcoming
 -----------
 
+0.0.3 (2020-12-08)
+------------------
+* Update postinst (`#14 <https://github.com/shadow-robot/sr_hand_detector/issues/14>`_)
+
 0.0.2 (2020-10-01)
 ------------------
 * Fixing rosfarm build (`#11 <https://github.com/shadow-robot/sr_hand_detector/issues/11>`_)
