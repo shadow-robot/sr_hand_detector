@@ -107,14 +107,6 @@ void SrHandAutodetect::compose_command_suffix()
     command_sufix_ = " eth_port:=" + eth_port + " hand_serial:=" +
       std::to_string(hand_serial) + " hand_id:=" + hand_id;
 
-    if (hand_info["robot_description"])
-    {
-      std::string robot_description = ros::package::getPath(hand_info["robot_description"] \
-                                                            ["package_name"].as<std::string>()) +
-                                                            "/" + hand_info["robot_description"] \
-                                                            ["relative_path"].as<std::string>();
-      command_sufix_ += " robot_description:=" + robot_description;
-    }
     if (hand_info["mapping_path"])
     {
       std::string mapping_path = ros::package::getPath(hand_info["mapping_path"] \
