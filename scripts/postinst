@@ -1,6 +1,6 @@
 #!/bin/sh
 set -e
-ROS_DISTRO=melodic
+ROS_DISTRO=noetic
 EXEC_NAME=sr_hand_detector_node
 case "$1" in
  configure)
