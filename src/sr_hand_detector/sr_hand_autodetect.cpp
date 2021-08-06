@@ -78,7 +78,7 @@ void SrHandAutodetect::compose_command_suffix()
 {
   if (0 == number_of_detected_hands_)
   {
-    std::cout << "No hands detected. Not wrapping the roslaunch command!";
+    std::cout << "No hands detected. Not wrapping the roslaunch command!" << std::endl;
     command_suffix_ = "";
   }
   else if (1 == number_of_detected_hands_)
