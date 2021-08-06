@@ -36,7 +36,7 @@ int main(int argc, char* argv[])
       }
   }
 
-  command_string += sr_hand_autodetect.command_sufix_;
+  command_string += sr_hand_autodetect.get_command_suffix();
   std::cout << "Actual command run: " << command_string << std::endl;
   system(command_string.c_str());
   return 0;

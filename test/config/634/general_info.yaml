@@ -1,7 +1,7 @@
 side: 'right'
-type: 'hand_e_plus'
+type: 'hand_e'
 name: 'demohand_A'
 biotac: false
 mapping_path:
   package_name: sr_hand_detector
-  relative_path: mapping.yaml
+  relative_path: rh_mapping.yaml
