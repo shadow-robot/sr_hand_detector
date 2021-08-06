@@ -2,6 +2,9 @@
 Changelog for package sr_hand_detector
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 0.0.6 (2021-08-06)
 ------------------
 * Adding some necessary functionalities (`#23 <https://github.com/shadow-robot/sr_hand_detector/issues/23>`_)
