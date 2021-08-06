@@ -2,6 +2,14 @@
 Changelog for package sr_hand_detector
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.6 (2021-08-06)
+------------------
+* Adding some necessary functionalities (`#23 <https://github.com/shadow-robot/sr_hand_detector/issues/23>`_)
+  * adding some necessary functionalities
+  * updating readme
+  * minor cleanup
+  * fixing typo
+
 0.0.5 (2021-08-03)
 ------------------
 * Changing CMake to appropriate version (`#21 <https://github.com/shadow-robot/sr_hand_detector/issues/21>`_)
