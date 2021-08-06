@@ -41,5 +41,5 @@ sr_hand_autodetect roslaunch sr_robot_launch srhand.launch sim:=false
 
 which is equivalent to:
 ```sh
-roslaunch sr_robot_launch srhand.launch sim:=false eth_port:=<eth_port> hand_serial:=<hand_serial> hand_id:=<hand_id>
+roslaunch sr_robot_launch srhand.launch sim:=false eth_port:=<eth_port> hand_serial:=<hand_serial> side:=<hand_side> hand_type:=<hand_type> mapping_path:=<mapping_path>
 ```

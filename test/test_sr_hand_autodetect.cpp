@@ -26,20 +26,20 @@
 
 TEST(SrHandAutodetect, test_run_unimanual)
 {
-  std::string expected_command_sufix = " eth_port:=eth0 hand_serial:=1130 hand_id:=rh";
+  std::string expected_command_suffix = " eth_port:=eth0 hand_serial:=1130 side:=right hand_type:=hand_e_plus";
   std::string hand_config_path = ros::package::getPath("sr_hand_detector") + "/test/config";
   std::string detected_hands_file = ros::package::getPath("sr_hand_detector") + "/test/config/test_unimanual.yaml";
 
   sr_hand_detector::SrHandAutodetect sr_hand_autodetect(detected_hands_file, hand_config_path);
   sr_hand_autodetect.run();
-  ASSERT_EQ(sr_hand_autodetect.command_sufix_, expected_command_sufix);
+  ASSERT_EQ(sr_hand_autodetect.get_command_suffix(), expected_command_suffix);
 }
 
 TEST(SrHandAutodetect, test_run_unimanual_additional_params)
 {
-  std::string expected_command_sufix = " eth_port:=eth0 hand_serial:=634 hand_id:=rh";
-  std::string expected_mapping_path = ros::package::getPath("sr_hand_detector") + "/mapping.yaml";
-  expected_command_sufix += " mapping_path:=" + expected_mapping_path;
+  std::string expected_command_suffix = " eth_port:=eth0 hand_serial:=634 side:=right hand_type:=hand_e";
+  std::string expected_mapping_path = ros::package::getPath("sr_hand_detector") + "/rh_mapping.yaml";
+  expected_command_suffix += " mapping_path:=" + expected_mapping_path;
 
   std::string hand_config_path = ros::package::getPath("sr_hand_detector") + "/test/config";
   std::string detected_hands_file = ros::package::getPath("sr_hand_detector") +
@@ -47,29 +47,34 @@ TEST(SrHandAutodetect, test_run_unimanual_additional_params)
 
   sr_hand_detector::SrHandAutodetect sr_hand_autodetect(detected_hands_file, hand_config_path);
   sr_hand_autodetect.run();
-  ASSERT_EQ(sr_hand_autodetect.command_sufix_, expected_command_sufix);
+  ASSERT_EQ(sr_hand_autodetect.get_command_suffix(), expected_command_suffix);
 }
 
 TEST(SrHandAutodetect, test_run_bimanual)
 {
-  std::string expected_command_sufix = " eth_port:=eth0_eth1 rh_serial:=1130 lh_serial:=2346";
+  std::string expected_command_suffix = " eth_port:=eth0_eth1 rh_serial:=634 lh_serial:=2346 hand_type:=hand_e";
+  std::string expected_rh_mapping_path = ros::package::getPath("sr_hand_detector") + "/rh_mapping.yaml";
+  std::string expected_lh_mapping_path = ros::package::getPath("sr_hand_detector") + "/lh_mapping.yaml";
+  expected_command_suffix += " rh_mapping_path:=" + expected_rh_mapping_path;
+  expected_command_suffix += " lh_mapping_path:=" + expected_lh_mapping_path;
+
   std::string hand_config_path = ros::package::getPath("sr_hand_detector") + "/test/config";
   std::string detected_hands_file = ros::package::getPath("sr_hand_detector") + "/test/config/test_bimanual.yaml";
 
   sr_hand_detector::SrHandAutodetect sr_hand_autodetect(detected_hands_file, hand_config_path);
   sr_hand_autodetect.run();
-  ASSERT_EQ(sr_hand_autodetect.command_sufix_, expected_command_sufix);
+  ASSERT_EQ(sr_hand_autodetect.get_command_suffix(), expected_command_suffix);
 }
 
 TEST(SrHandAutodetect, test_run_no_hands)
 {
-  std::string expected_command_sufix = "";
+  std::string expected_command_suffix = "";
   std::string hand_config_path = ros::package::getPath("sr_hand_detector") + "/test/config";
   std::string detected_hands_file = ros::package::getPath("sr_hand_detector") + "/test/config/test_no_hands.yaml";
 
   sr_hand_detector::SrHandAutodetect sr_hand_autodetect(detected_hands_file, hand_config_path);
   sr_hand_autodetect.run();
-  ASSERT_EQ(sr_hand_autodetect.command_sufix_, expected_command_sufix);
+  ASSERT_EQ(sr_hand_autodetect.get_command_suffix(), expected_command_suffix);
 }
 
 TEST(SrHandAutodetect, test_run_non_existing_hand)

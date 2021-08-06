@@ -64,22 +64,6 @@ YAML::Node SrHandAutodetect::get_hand_general_info(int serial)
   }
 }
 
-std::string SrHandAutodetect::get_hand_id(std::string hand_side)
-{
-  if ("right" == hand_side)
-  {
-    return "rh";
-  }
-  else if ("left" == hand_side)
-  {
-    return "lh";
-  }
-  else
-  {
-    throw std::runtime_error("sr_hand_autodetect: Unknown hand side.");
-  }
-}
-
 void SrHandAutodetect::detect_hands()
 {
   YAML::Node config = YAML::LoadFile(detected_hands_file_);
@@ -94,18 +78,18 @@ void SrHandAutodetect::compose_command_suffix()
 {
   if (0 == number_of_detected_hands_)
   {
-    std::cout << "No hands detected. Not wrapping the roslaunch command!";
-    command_sufix_ = "";
+    std::cout << "No hands detected. Not wrapping the roslaunch command!" << std::endl;
+    command_suffix_ = "";
   }
   else if (1 == number_of_detected_hands_)
   {
     int hand_serial = hand_serial_and_port_map_.begin()->first;
     std::string eth_port = hand_serial_and_port_map_.begin()->second;
     YAML::Node hand_info = get_hand_general_info(hand_serial);
-    std::string hand_id = get_hand_id(hand_info["side"].as<std::string>());
 
-    command_sufix_ = " eth_port:=" + eth_port + " hand_serial:=" +
-      std::to_string(hand_serial) + " hand_id:=" + hand_id;
+    command_suffix_ = " eth_port:=" + eth_port + " hand_serial:=" +
+      std::to_string(hand_serial) + " side:=" + hand_info["side"].as<std::string>() +
+      " hand_type:=" + hand_info["type"].as<std::string>();
 
     if (hand_info["mapping_path"])
     {
@@ -113,43 +97,46 @@ void SrHandAutodetect::compose_command_suffix()
                                                        ["package_name"].as<std::string>()) +
                                                        "/" + hand_info["mapping_path"] \
                                                        ["relative_path"].as<std::string>();
-      command_sufix_ += " mapping_path:=" + mapping_path;
+      command_suffix_ += " mapping_path:=" + mapping_path;
     }
   }
   else if (2 == number_of_detected_hands_)
   {
     int rh_serial, lh_serial;
-    std::string rh_eth_port, lh_eth_port;
-    command_sufix_.clear();
+    std::string rh_eth_port, lh_eth_port, rh_hand_type, lh_hand_type;
+    command_suffix_.clear();
+    std::string mapping_path_suffix_component;
 
     for (auto const& serial_to_port : hand_serial_and_port_map_)
     {
       YAML::Node hand_info = get_hand_general_info(serial_to_port.first);
-      std::string hand_id = get_hand_id(hand_info["side"].as<std::string>());
-      if ("rh" == hand_id)
+      std::string hand_side = hand_info["side"].as<std::string>();
+      if ("right" == hand_side)
       {
         rh_serial = serial_to_port.first;
         rh_eth_port = serial_to_port.second;
+        rh_hand_type = hand_info["type"].as<std::string>();
         if (hand_info["mapping_path"])
         {
           std::string mapping_path = ros::package::getPath(hand_info["mapping_path"] \
                                                            ["package_name"].as<std::string>()) +
                                                            "/" + hand_info["mapping_path"] \
                                                            ["relative_path"].as<std::string>();
-          command_sufix_ += " rh_mapping_path:=" + mapping_path;
+          mapping_path_suffix_component += " rh_mapping_path:=" + mapping_path;
         }
       }
-      else if ("lh" == hand_id)
+      else if ("left" == hand_side)
       {
         lh_serial = serial_to_port.first;
         lh_eth_port = serial_to_port.second;
+        lh_hand_type = hand_info["type"].as<std::string>();
         if (hand_info["mapping_path"])
         {
           std::string mapping_path = ros::package::getPath(hand_info["mapping_path"] \
                                                            ["package_name"].as<std::string>()) +
                                                            "/" + hand_info["mapping_path"] \
                                                            ["relative_path"].as<std::string>();
-          command_sufix_ += " lh_mapping_path:=" + mapping_path;
+          mapping_path_suffix_component += " lh_mapping_path:=" + mapping_path;
         }
       }
       else
@@ -158,8 +145,14 @@ void SrHandAutodetect::compose_command_suffix()
       }
     }
 
-    command_sufix_ += " eth_port:=" + rh_eth_port + "_" + lh_eth_port + " rh_serial:=" +
-      std::to_string(rh_serial) + " lh_serial:=" + std::to_string(lh_serial);
+    if (rh_hand_type != lh_hand_type)
+    {
+      throw std::runtime_error("sr_hand_autodetect: Different hand types! This is currently not supported.");
+    }
+
+    command_suffix_ += " eth_port:=" + rh_eth_port + "_" + lh_eth_port + " rh_serial:=" +
+      std::to_string(rh_serial) + " lh_serial:=" + std::to_string(lh_serial) +
+      " hand_type:=" + rh_hand_type + mapping_path_suffix_component;
   }
   else
   {
@@ -171,5 +164,10 @@ void SrHandAutodetect::run()
 {
   detect_hands();
   compose_command_suffix();
+}
+
+std::string SrHandAutodetect::get_command_suffix()
+{
+  return command_suffix_;
 }
 }  // namespace sr_hand_detector

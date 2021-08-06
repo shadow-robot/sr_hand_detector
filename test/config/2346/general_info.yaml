@@ -2,3 +2,6 @@ side: 'left'
 type: 'hand_e'
 name: 'demohand_D'
 biotac: false
+mapping_path:
+  package_name: sr_hand_detector
+  relative_path: lh_mapping.yaml

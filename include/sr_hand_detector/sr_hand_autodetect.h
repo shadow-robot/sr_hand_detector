@@ -30,11 +30,11 @@ class SrHandAutodetect
   YAML::Node get_hand_general_info(int serial);
   void detect_hands();
   void compose_command_suffix();
-  std::string get_hand_id(std::string hand_side);
 
   int number_of_detected_hands_;
   std::string sr_hand_config_path_;
   std::string detected_hands_file_;
+  std::string command_suffix_;
   std::map<int, std::string> hand_serial_and_port_map_;
 
   public:
@@ -42,8 +42,7 @@ class SrHandAutodetect
                               std::string hand_config_path = "");
     ~SrHandAutodetect();
     void run();
-
-    std::string command_sufix_;
+    std::string get_command_suffix();
 };
 
 }  // namespace sr_hand_detector
