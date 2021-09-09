@@ -4,6 +4,11 @@ Changelog for package sr_hand_detector
 
 Forthcoming
 -----------
+* Adding executables to package lib (`#26 <https://github.com/shadow-robot/sr_hand_detector/issues/26>`_)
+  * Adding executables to package lib
+  * Update CMakeLists.txt
+  * fixing build
+* Contributors: mikramarc
 
 0.0.6 (2021-08-06)
 ------------------
