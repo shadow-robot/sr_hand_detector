@@ -30,6 +30,8 @@ class SrHandAutodetect
   YAML::Node get_hand_general_info(int serial);
   void detect_hands();
   void compose_command_suffix();
+  void compose_command_suffix_unimanual();
+  void compose_command_suffix_bimanual();
 
   int number_of_detected_hands_;
   std::string sr_hand_config_path_;
