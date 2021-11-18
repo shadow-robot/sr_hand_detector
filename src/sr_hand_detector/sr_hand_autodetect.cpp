@@ -117,7 +117,13 @@ void SrHandAutodetect::compose_command_suffix_unimanual()
   command_suffix_ = " eth_port:=" + eth_port +
                     " hand_serial:=" + std::to_string(hand_serial) +
                     " side:=" + hand_info["side"].as<std::string>() +
-                    " hand_type:=" + hand_info["type"].as<std::string>();
+                    " hand_type:=" + hand_info["type"].as<std::string>() + 
+                    " hand_version:=" + hand_info["version"].as<std::string>() +
+                    " fingers:=" + vector_to_xacro_string(yaml_node_list_to_std_vector(hand_info["fingers"])) +
+                    " tip_sensors:=" + map_to_xacro_string(yaml_node_map_to_std_map(hand_info["sensors"]["tip"])) +
+                    " mid_sensors:=" + map_to_xacro_string(yaml_node_map_to_std_map(hand_info["sensors"]["mid"])) +
+                    " prox_sensors:=" + map_to_xacro_string(yaml_node_map_to_std_map(hand_info["sensors"]["prox"])) +
+                    " palm_sensor:=" + map_to_xacro_string(yaml_node_map_to_std_map(hand_info["sensors"]["palm"]));;
 
   if (hand_info["mapping_path"])
   {
@@ -183,5 +189,58 @@ void SrHandAutodetect::compose_command_suffix_bimanual()
     std::to_string(rh_serial) + " lh_serial:=" + std::to_string(lh_serial) +
     " hand_type:=" + rh_hand_type + mapping_path_suffix_component;
 }
+
+std::string SrHandAutodetect::vector_to_xacro_string(const std::vector<std::string> &vec)
+{
+  std::string result;
+
+  for (auto it = vec.begin(); it != vec.end(); ++it)
+  {
+    result += (*it);
+    if (it != std::prev(vec.end())) result += ",";
+  }
+
+  return result;
+}
+
+std::string SrHandAutodetect::map_to_xacro_string(const std::map<std::string, std::string> &m)
+{
+  if (m.size() == 0) return "none";
+
+  std::string result;
+
+  for (auto it = m.begin(); it != m.end(); it++)
+  {
+    result += (it->first + "=" + it->second);
+    if (it != std::prev(m.end())) result += ",";
+  }
+
+  return result;
+}
+
+std::vector<std::string> SrHandAutodetect::yaml_node_list_to_std_vector(const YAML::Node &node_list)
+{
+  std::vector<std::string> result;
+
+  for (std::size_t i = 0; i < node_list.size(); ++i)
+  {
+    result.push_back(node_list[i].as<std::string>());
+  }
+
+  return result;
+}
+
+std::map<std::string, std::string> SrHandAutodetect::yaml_node_map_to_std_map(const YAML::Node &node_map)
+{
+  std::map<std::string, std::string> result;
+
+  for(auto it=node_map.begin();it != node_map.end(); ++it)
+  {
+    result.insert(std::pair<std::string, std::string>(it->first.as<std::string>(), it->second.as<std::string>()));
+  }
+
+  return result;
+}
+
 
 }  // namespace sr_hand_detector
