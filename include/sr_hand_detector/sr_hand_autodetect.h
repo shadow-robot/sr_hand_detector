@@ -55,7 +55,6 @@ class SrHandAutodetect
     std::string command_suffix_;
     std::map<int, std::string> hand_serial_and_port_map_;
 };
-
 }  // namespace sr_hand_detector
 
 #endif  // SR_HAND_DETECTOR_SR_HAND_AUTODETECT_H

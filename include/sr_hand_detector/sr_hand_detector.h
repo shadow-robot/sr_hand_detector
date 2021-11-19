@@ -49,9 +49,7 @@ class SrHandDetector
     uint8 ebuf_[MAXBUF];
     const int SLAVE_WITH_HAND_SERIAL_ = 2;
     const int NUM_OF_SLAVES_EXPECTED_FOR_HAND_ = 2;
-
 };
-
 }  // namespace sr_hand_detector
 
 #endif  // SR_HAND_DETECTOR_SR_HAND_DETECTOR_H
