@@ -123,7 +123,7 @@ void SrHandAutodetect::compose_command_suffix_unimanual()
                     " tip_sensors:=" + map_to_xacro_string(yaml_node_map_to_std_map(hand_info["sensors"]["tip"])) +
                     " mid_sensors:=" + map_to_xacro_string(yaml_node_map_to_std_map(hand_info["sensors"]["mid"])) +
                     " prox_sensors:=" + map_to_xacro_string(yaml_node_map_to_std_map(hand_info["sensors"]["prox"])) +
-                    " palm_sensor:=" + map_to_xacro_string(yaml_node_map_to_std_map(hand_info["sensors"]["palm"]));;
+                    " palm_sensor:=" + map_to_xacro_string(yaml_node_map_to_std_map(hand_info["sensors"]["palm"]));
 
   if (hand_info["mapping_path"])
   {
@@ -138,7 +138,7 @@ void SrHandAutodetect::compose_command_suffix_unimanual()
 void SrHandAutodetect::compose_command_suffix_bimanual()
 {
   int rh_serial, lh_serial;
-  std::string rh_command_component, lh_command_component, rh_eth_port, lh_eth_port, rh_fingers, lh_fingers, rh_tip_sensors, lh_tip_sensors, rh_mid_sensors, lh_mid_sensors, rh_prox_sensors, lh_prox_sensors, rh_palm_sensor, lh_palm_sensors;
+  std::string rh_eth_port, lh_eth_port, rh_command_component, lh_command_component;
   command_suffix_.clear();
   std::string mapping_path_suffix_component;
 
@@ -150,13 +150,13 @@ void SrHandAutodetect::compose_command_suffix_bimanual()
     {
       rh_serial = serial_to_port.first;
       rh_eth_port = serial_to_port.second;
-      rh_command_component = command_suffix_bimanual_per_side(hand_info);
+      rh_command_component = command_suffix_bimanual_per_hand(hand_info);
     }
     else if ("left" == hand_side)
     {
       lh_serial = serial_to_port.first;
       lh_eth_port = serial_to_port.second;
-      lh_command_component = command_suffix_bimanual_per_side(hand_info);
+      lh_command_component = command_suffix_bimanual_per_hand(hand_info);
     }
     else
     {
@@ -170,7 +170,7 @@ void SrHandAutodetect::compose_command_suffix_bimanual()
 }
 
 
-std::string SrHandAutodetect::command_suffix_bimanual_per_side(const YAML::Node &hand_info)
+std::string SrHandAutodetect::command_suffix_bimanual_per_hand(const YAML::Node &hand_info)
 {
   std::string mapping_path_suffix_component;
   std::string side = hand_info["side"].as<std::string>();
@@ -185,8 +185,13 @@ std::string SrHandAutodetect::command_suffix_bimanual_per_side(const YAML::Node 
   }
 
   return " " + side + "_hand_type:=" + hand_info["type"].as<std::string>() +
-         " " + side + "_hand_version:=" + hand_info["version"].as<std::string>()
-         + mapping_path_suffix_component;
+         " " + side + "_hand_version:=" + hand_info["version"].as<std::string>() +
+         " " + side + "_fingers:=" + vector_to_xacro_string(yaml_node_list_to_std_vector(hand_info["fingers"])) +
+         " " + side + "_tip_sensors:=" + map_to_xacro_string(yaml_node_map_to_std_map(hand_info["sensors"]["tip"])) +
+         " " + side + "_mid_sensors:=" + map_to_xacro_string(yaml_node_map_to_std_map(hand_info["sensors"]["mid"])) +
+         " " + side + "_prox_sensors:=" + map_to_xacro_string(yaml_node_map_to_std_map(hand_info["sensors"]["prox"])) +
+         " " + side + "_palm_sensor:=" + map_to_xacro_string(yaml_node_map_to_std_map(hand_info["sensors"]["palm"])) +
+         mapping_path_suffix_component;
 }
 
 std::string SrHandAutodetect::hand_side_to_prefix(const std::string &side)
