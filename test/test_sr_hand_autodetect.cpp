@@ -58,11 +58,13 @@ TEST(SrHandAutodetect, test_run_unimanual_additional_params)
 
 TEST(SrHandAutodetect, test_run_bimanual)
 {
-  std::string expected_command_suffix = " eth_port:=eth0_eth1 rh_serial:=634 lh_serial:=2346 hand_type:=hand_e";
   std::string expected_rh_mapping_path = ros::package::getPath("sr_hand_detector") + "/rh_mapping.yaml";
   std::string expected_lh_mapping_path = ros::package::getPath("sr_hand_detector") + "/lh_mapping.yaml";
-  expected_command_suffix += " rh_mapping_path:=" + expected_rh_mapping_path;
-  expected_command_suffix += " lh_mapping_path:=" + expected_lh_mapping_path;
+  std::string expected_command_suffix = " eth_port:=eth0_eth1 rh_serial:=634 lh_serial:=2346"
+                                        " right_hand_type:=hand_e right_hand_version:=E3M5"
+                                        " rh_mapping_path:=" + expected_rh_mapping_path +
+                                        " left_hand_type:=hand_e left_hand_version:=E3M5"
+                                        " lh_mapping_path:=" + expected_lh_mapping_path;
 
   std::string hand_config_path = ros::package::getPath("sr_hand_detector") + "/test/config";
   std::string detected_hands_file = ros::package::getPath("sr_hand_detector") + "/test/config/test_bimanual.yaml";

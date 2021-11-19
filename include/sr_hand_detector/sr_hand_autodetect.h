@@ -44,6 +44,8 @@ class SrHandAutodetect
     std::string map_to_xacro_string(const std::map<std::string, std::string> &map);
     std::vector<std::string> yaml_node_list_to_std_vector(const YAML::Node &node);
     std::map<std::string, std::string> yaml_node_map_to_std_map(const YAML::Node &node_map);
+    std::string command_suffix_bimanual_per_side(const YAML::Node &hand_info);
+    std::string hand_side_to_prefix(const std::string &side);
 
     int number_of_detected_hands_;
     std::string sr_hand_config_path_;
