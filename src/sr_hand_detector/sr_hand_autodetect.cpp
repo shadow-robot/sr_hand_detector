@@ -105,7 +105,6 @@ void SrHandAutodetect::compose_command_suffix()
     default:
       throw std::runtime_error("sr_hand_autodetect: Unsupported number of hands detected in the system");
   }
-
 }
 
 void SrHandAutodetect::compose_command_suffix_unimanual()
@@ -138,9 +137,8 @@ void SrHandAutodetect::compose_command_suffix_unimanual()
 void SrHandAutodetect::compose_command_suffix_bimanual()
 {
   int rh_serial, lh_serial;
-  std::string rh_eth_port, lh_eth_port, rh_command_component, lh_command_component;
+  std::string rh_eth_port, lh_eth_port, rh_command_component, lh_command_component, mapping_path_suffix_component;
   command_suffix_.clear();
-  std::string mapping_path_suffix_component;
 
   for (auto const& serial_to_port : hand_serial_and_port_map_)
   {
