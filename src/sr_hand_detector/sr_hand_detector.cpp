@@ -16,6 +16,7 @@
 
 #include <iostream>
 #include <string>
+#include <map>
 #include <utility>
 #include <algorithm>
 #include <ifaddrs.h>
