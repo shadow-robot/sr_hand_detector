@@ -14,13 +14,16 @@
 * with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "sr_hand_detector/sr_hand_autodetect.h"
-#include "yaml-cpp/yaml.h"
-#include "yaml-cpp/exceptions.h"
 #include <iostream>
 #include <ros/package.h>
 #include <string>
 #include <utility>
+#include <map>
+#include <vector>
+
+#include "sr_hand_detector/sr_hand_autodetect.h"
+#include "yaml-cpp/yaml.h"
+#include "yaml-cpp/exceptions.h"
 
 namespace sr_hand_detector
 {
@@ -116,7 +119,7 @@ void SrHandAutodetect::compose_command_suffix_unimanual()
   command_suffix_ = " eth_port:=" + eth_port +
                     " hand_serial:=" + std::to_string(hand_serial) +
                     " side:=" + hand_info["side"].as<std::string>() +
-                    " hand_type:=" + hand_info["type"].as<std::string>() + 
+                    " hand_type:=" + hand_info["type"].as<std::string>() +
                     " hand_version:=" + hand_info["version"].as<std::string>() +
                     " fingers:=" + vector_to_xacro_string(yaml_node_list_to_std_vector(hand_info["fingers"])) +
                     " tip_sensors:=" + map_to_xacro_string(yaml_node_map_to_std_map(hand_info["sensors"]["tip"])) +
@@ -250,7 +253,7 @@ std::map<std::string, std::string> SrHandAutodetect::yaml_node_map_to_std_map(co
 {
   std::map<std::string, std::string> result;
 
-  for(auto it=node_map.begin();it != node_map.end(); ++it)
+  for (auto it=node_map.begin(); it != node_map.end(); ++it)
   {
     result.insert(std::pair<std::string, std::string>(it->first.as<std::string>(), it->second.as<std::string>()));
   }

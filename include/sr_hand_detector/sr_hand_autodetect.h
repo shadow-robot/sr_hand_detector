@@ -19,6 +19,8 @@
 
 #include <string>
 #include <map>
+#include <vector>
+
 #include "sr_hand_detector/sr_hand_detector.h"
 #include "yaml-cpp/yaml.h"
 
