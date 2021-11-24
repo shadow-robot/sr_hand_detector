@@ -38,7 +38,7 @@ int main(int argc, char** argv)
   {
     std::cout << "Detected hand on port: " << serial_to_port.second << std::endl;
     std::cout << "Hand's serial number: " << serial_to_port.first << std::endl;
-    hand_serial_to_port_map[serial_to_port.first] = serial_to_port.second;
+    hand_serial_to_port_map_yaml[serial_to_port.first] = serial_to_port.second;
   }
 
   std::ofstream fout("/tmp/sr_hand_detector.yaml");
