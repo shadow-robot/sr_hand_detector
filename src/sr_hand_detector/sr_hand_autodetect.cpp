@@ -211,6 +211,8 @@ std::string SrHandAutodetect::hand_side_to_prefix(const std::string &side)
 
 std::string SrHandAutodetect::vector_to_xacro_string(const std::vector<std::string> &vec)
 {
+  if (vec.size() == 0) return "none";
+
   std::string result;
 
   for (auto it = vec.begin(); it != vec.end(); ++it)
