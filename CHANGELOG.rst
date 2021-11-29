@@ -2,30 +2,15 @@
 Changelog for package sr_hand_detector
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-0.0.7 (2021-09-09)
-------------------
-* Adding executables to package lib (`#26 <https://github.com/shadow-robot/sr_hand_detector/issues/26>`_)
-  * Adding executables to package lib
-  * Update CMakeLists.txt
-  * fixing build
-* Contributors: mikramarc
-
 Forthcoming
 -----------
 * Adjusting to new xacros (`#29 <https://github.com/shadow-robot/sr_hand_detector/issues/29>`_)
-  * initial cleanup
-  * unimanual working
-  * half way through with bimanual
-  * working
-  * cleaning
-  * lint
-  * lint
-  * lint
-  * fixing bug
-  * review
   Co-authored-by: georgiablanco <georgia@shadowrobot.com>
-* 0.0.7 (`#28 <https://github.com/shadow-robot/sr_hand_detector/issues/28>`_)
-* adding changelog (`#27 <https://github.com/shadow-robot/sr_hand_detector/issues/27>`_)
+* Adding executables to package lib (`#26 <https://github.com/shadow-robot/sr_hand_detector/issues/26>`_)
+* Contributors: mikramarc
+
+0.0.7 (2021-09-09)
+------------------
 * Adding executables to package lib (`#26 <https://github.com/shadow-robot/sr_hand_detector/issues/26>`_)
   * Adding executables to package lib
   * Update CMakeLists.txt
