@@ -16,6 +16,7 @@
 
 #include <iostream>
 #include <string>
+#include <map>
 #include <utility>
 #include <algorithm>
 #include <ifaddrs.h>
@@ -72,7 +73,7 @@ void SrHandDetector::get_hands_ports_and_serials()
     if (NUM_OF_SLAVES_EXPECTED_FOR_HAND_ == count_slaves_on_port(port_name))
     {
       int hand_serial = get_hand_serial(port_name);
-      hand_serial_and_port_map_.insert(std::pair<int, std::string>(hand_serial, port_name));
+      hand_serial_to_port_map_.insert(std::pair<int, std::string>(hand_serial, port_name));
     }
   }
 }
@@ -163,5 +164,10 @@ int SrHandDetector::read_eeprom(int slave, int start, int length)
   }
 
   return 1;
+}
+
+std::map<int, std::string> SrHandDetector::get_hand_serial_to_port()
+{
+  return hand_serial_to_port_map_;
 }
 }  // namespace sr_hand_detector

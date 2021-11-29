@@ -19,6 +19,8 @@
 
 #include <string>
 #include <map>
+#include <vector>
+
 #include "sr_hand_detector/sr_hand_detector.h"
 #include "yaml-cpp/yaml.h"
 
@@ -26,25 +28,33 @@ namespace sr_hand_detector
 {
 class SrHandAutodetect
 {
-  void get_path_to_sr_hand_config();
-  YAML::Node get_hand_general_info(int serial);
-  void detect_hands();
-  void compose_command_suffix();
-
-  int number_of_detected_hands_;
-  std::string sr_hand_config_path_;
-  std::string detected_hands_file_;
-  std::string command_suffix_;
-  std::map<int, std::string> hand_serial_and_port_map_;
-
   public:
     explicit SrHandAutodetect(std::string detected_hands_file = "/tmp/sr_hand_detector.yaml",
                               std::string hand_config_path = "");
     ~SrHandAutodetect();
     void run();
     std::string get_command_suffix();
-};
 
+  private:
+    void get_path_to_sr_hand_config();
+    YAML::Node get_hand_general_info(int serial);
+    void detect_hands();
+    void compose_command_suffix();
+    void compose_command_suffix_unimanual();
+    void compose_command_suffix_bimanual();
+    std::string vector_to_xacro_string(const std::vector<std::string> &vec);
+    std::string map_to_xacro_string(const std::map<std::string, std::string> &map);
+    std::vector<std::string> yaml_node_list_to_std_vector(const YAML::Node &node);
+    std::map<std::string, std::string> yaml_node_map_to_std_map(const YAML::Node &node_map);
+    std::string command_suffix_bimanual_per_hand(const YAML::Node &hand_info);
+    std::string hand_side_to_prefix(const std::string &side);
+
+    int number_of_detected_hands_;
+    std::string sr_hand_config_path_;
+    std::string detected_hands_file_;
+    std::string command_suffix_;
+    std::map<int, std::string> hand_serial_and_port_map_;
+};
 }  // namespace sr_hand_detector
 
 #endif  // SR_HAND_DETECTOR_SR_HAND_AUTODETECT_H

@@ -26,21 +26,22 @@ int main(int argc, char** argv)
 {
   sr_hand_detector::SrHandDetector sr_hand_detector;
   sr_hand_detector.run();
+  auto hand_serial_to_port_map = sr_hand_detector.get_hand_serial_to_port();
 
-  if (sr_hand_detector.hand_serial_and_port_map_.empty())
+  if (hand_serial_to_port_map.empty())
   {
     std::cout << "No hand detected on any of the ports!" << std::endl;
   }
 
-  YAML::Node hand_serial_to_port_map;
-  for (auto const& x : sr_hand_detector.hand_serial_and_port_map_)
+  YAML::Node hand_serial_to_port_map_yaml;
+  for (auto const& serial_to_port : hand_serial_to_port_map)
   {
-    std::cout << "Detected hand on port: " << x.second << std::endl;
-    std::cout << "Hand's serial number: " << x.first << std::endl;
-    hand_serial_to_port_map[x.first] = x.second;
+    std::cout << "Detected hand on port: " << serial_to_port.second << std::endl;
+    std::cout << "Hand's serial number: " << serial_to_port.first << std::endl;
+    hand_serial_to_port_map_yaml[serial_to_port.first] = serial_to_port.second;
   }
 
   std::ofstream fout("/tmp/sr_hand_detector.yaml");
-  fout << hand_serial_to_port_map;
+  fout << hand_serial_to_port_map_yaml;
   return 0;
 }

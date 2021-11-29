@@ -26,7 +26,10 @@
 
 TEST(SrHandAutodetect, test_run_unimanual)
 {
-  std::string expected_command_suffix = " eth_port:=eth0 hand_serial:=1130 side:=right hand_type:=hand_e_plus";
+  std::string expected_command_suffix = " eth_port:=eth0 hand_serial:=1130 side:=right"
+                                        " hand_type:=hand_e_plus hand_version:=E3M5 fingers:=th,ff,mf,rf,lf"
+                                        " tip_sensors:=ff=bt_sp,lf=bt_sp,mf=bt_sp,rf=bt_sp,th=bt_sp mid_sensors:=none"
+                                        " prox_sensors:=none palm_sensor:=none";
   std::string hand_config_path = ros::package::getPath("sr_hand_detector") + "/test/config";
   std::string detected_hands_file = ros::package::getPath("sr_hand_detector") + "/test/config/test_unimanual.yaml";
 
@@ -37,7 +40,10 @@ TEST(SrHandAutodetect, test_run_unimanual)
 
 TEST(SrHandAutodetect, test_run_unimanual_additional_params)
 {
-  std::string expected_command_suffix = " eth_port:=eth0 hand_serial:=634 side:=right hand_type:=hand_e";
+  std::string expected_command_suffix = " eth_port:=eth0 hand_serial:=634 side:=right"
+                                        " hand_type:=hand_e hand_version:=E3M5 fingers:=th,ff,mf,rf,lf"
+                                        " tip_sensors:=ff=pst,lf=pst,mf=pst,rf=pst,th=pst mid_sensors:=none"
+                                        " prox_sensors:=none palm_sensor:=none";
   std::string expected_mapping_path = ros::package::getPath("sr_hand_detector") + "/rh_mapping.yaml";
   expected_command_suffix += " mapping_path:=" + expected_mapping_path;
 
@@ -52,11 +58,17 @@ TEST(SrHandAutodetect, test_run_unimanual_additional_params)
 
 TEST(SrHandAutodetect, test_run_bimanual)
 {
-  std::string expected_command_suffix = " eth_port:=eth0_eth1 rh_serial:=634 lh_serial:=2346 hand_type:=hand_e";
   std::string expected_rh_mapping_path = ros::package::getPath("sr_hand_detector") + "/rh_mapping.yaml";
   std::string expected_lh_mapping_path = ros::package::getPath("sr_hand_detector") + "/lh_mapping.yaml";
-  expected_command_suffix += " rh_mapping_path:=" + expected_rh_mapping_path;
-  expected_command_suffix += " lh_mapping_path:=" + expected_lh_mapping_path;
+  std::string expected_command_suffix = " eth_port:=eth0_eth1 rh_serial:=634 lh_serial:=2346 right_hand_type:=hand_e"
+                                        " right_hand_version:=E3M5 right_fingers:=th,ff,mf,rf,lf"
+                                        " right_tip_sensors:=ff=pst,lf=pst,mf=pst,rf=pst,th=pst"
+                                        " right_mid_sensors:=none right_prox_sensors:=none right_palm_sensor:=none"
+                                        " rh_mapping_path:=" + expected_rh_mapping_path +
+                                        " left_hand_type:=hand_e left_hand_version:=E3M5 left_fingers:=th,ff,mf,rf,lf"
+                                        " left_tip_sensors:=ff=bt_sp,lf=bt_sp,mf=bt_sp,rf=bt_sp,th=bt_sp"
+                                        " left_mid_sensors:=none left_prox_sensors:=none left_palm_sensor:=none"
+                                        " lh_mapping_path:=" + expected_lh_mapping_path;
 
   std::string hand_config_path = ros::package::getPath("sr_hand_detector") + "/test/config";
   std::string detected_hands_file = ros::package::getPath("sr_hand_detector") + "/test/config/test_bimanual.yaml";
