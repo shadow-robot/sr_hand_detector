@@ -2,6 +2,13 @@
 Changelog for package sr_hand_detector
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Adjusting to new xacros (`#29 <https://github.com/shadow-robot/sr_hand_detector/issues/29>`_)
+  Co-authored-by: georgiablanco <georgia@shadowrobot.com>
+* Adding executables to package lib (`#26 <https://github.com/shadow-robot/sr_hand_detector/issues/26>`_)
+* Contributors: mikramarc
+
 0.0.7 (2021-09-09)
 ------------------
 * Adding executables to package lib (`#26 <https://github.com/shadow-robot/sr_hand_detector/issues/26>`_)
