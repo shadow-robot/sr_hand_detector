@@ -43,3 +43,9 @@ which is equivalent to:
 ```sh
 roslaunch sr_robot_launch srhand.launch sim:=false eth_port:=<eth_port> hand_serial:=<hand_serial> side:=<hand_side> hand_type:=<hand_type> mapping_path:=<mapping_path>
 ```
+
+If there are two hands connected and user wants to run only one of them using autodetection, there are `--right-only` (or `-r`) and `--left-only` (or `-l`) flags available, e.g.:
+
+```sh
+sr_hand_autodetect --right-only roslaunch sr_robot_launch srhand.launch sim:=false
+```
