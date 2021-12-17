@@ -90,7 +90,8 @@ TEST(SrHandAutodetect, test_run_bimanual_forced_side)
   std::string hand_config_path = ros::package::getPath("sr_hand_detector") + "/test/config";
   std::string detected_hands_file = ros::package::getPath("sr_hand_detector") + "/test/config/test_bimanual.yaml";
 
-  sr_hand_detector::SrHandAutodetect sr_hand_autodetect(detected_hands_file, hand_config_path, sr_hand_detector::ForcedHandSide::right);
+  sr_hand_detector::SrHandAutodetect sr_hand_autodetect(detected_hands_file, hand_config_path,
+                                                        sr_hand_detector::ForcedHandSide::right);
   sr_hand_autodetect.run();
   ASSERT_EQ(sr_hand_autodetect.get_command_suffix(), expected_command_suffix);
 }

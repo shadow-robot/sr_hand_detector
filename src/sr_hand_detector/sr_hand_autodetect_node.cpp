@@ -42,7 +42,7 @@ int main(int argc, char* argv[])
   else if (("--left-only" == first_arg) || ("-l" == first_arg))
   {
     forced_hand_side = sr_hand_detector::ForcedHandSide::left;
-    iter++;  
+    iter++;
   }
 
   std::string command_string = "";
