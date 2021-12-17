@@ -21,8 +21,8 @@
 
 namespace
 {
-  std::string CONST_DETECTED_HANDS_FILE = "/tmp/sr_hand_detector.yaml";
-  std::string CONST_HAND_CONFIG_PATH = "";
+  const std::string DETECTED_HANDS_FILE = "/tmp/sr_hand_detector.yaml";
+  const std::string HAND_CONFIG_PATH = "";
 }
 
 int main(int argc, char* argv[])
@@ -55,8 +55,8 @@ int main(int argc, char* argv[])
       }
   }
 
-  sr_hand_detector::SrHandAutodetect sr_hand_autodetect(CONST_DETECTED_HANDS_FILE,
-                                                        CONST_HAND_CONFIG_PATH,
+  sr_hand_detector::SrHandAutodetect sr_hand_autodetect(DETECTED_HANDS_FILE,
+                                                        HAND_CONFIG_PATH,
                                                         forced_hand_side);
   sr_hand_autodetect.run();
 
