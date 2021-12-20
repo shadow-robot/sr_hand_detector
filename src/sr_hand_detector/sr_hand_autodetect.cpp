@@ -97,17 +97,18 @@ void SrHandAutodetect::filter_hands_if_side_forced()
   if (ForcedHandSide::none == forced_hand_side_) return;
 
   std::string side_to_remove_string;
-  if (ForcedHandSide::right == forced_hand_side_)
+  switch (forced_hand_side_)
   {
-    side_to_remove_string = "left";
-  }
-  else if (ForcedHandSide::left == forced_hand_side_)
-  {
-    side_to_remove_string = "right";
-  }
-  else
-  {
-    throw std::runtime_error("sr_hand_autodetect: Unknown side to be forced");
+    case ForcedHandSide::right:
+      side_to_remove_string = "left";
+      break;
+
+    case ForcedHandSide::left:
+      side_to_remove_string = "right";
+      break;
+
+    default:
+      throw std::runtime_error("sr_hand_autodetect: Unknown side to be forced");
   }
 
   for (auto it = hand_serial_and_port_map_.cbegin(); it != hand_serial_and_port_map_.cend(); /* no increment */)
