@@ -2,8 +2,8 @@
 Changelog for package sr_hand_detector
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.9 (2021-12-20)
+------------------
 * Adding optional side forcing (`#32 <https://github.com/shadow-robot/sr_hand_detector/issues/32>`_)
 * Contributors: mikramarc
 
