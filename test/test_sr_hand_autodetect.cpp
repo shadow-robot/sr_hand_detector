@@ -78,6 +78,24 @@ TEST(SrHandAutodetect, test_run_bimanual)
   ASSERT_EQ(sr_hand_autodetect.get_command_suffix(), expected_command_suffix);
 }
 
+TEST(SrHandAutodetect, test_run_bimanual_forced_side)
+{
+  std::string expected_command_suffix = " eth_port:=eth0 hand_serial:=634 side:=right"
+                                        " hand_type:=hand_e hand_version:=E3M5 fingers:=th,ff,mf,rf,lf"
+                                        " tip_sensors:=ff=pst,lf=pst,mf=pst,rf=pst,th=pst mid_sensors:=none"
+                                        " prox_sensors:=none palm_sensor:=none";
+  std::string expected_mapping_path = ros::package::getPath("sr_hand_detector") + "/rh_mapping.yaml";
+  expected_command_suffix += " mapping_path:=" + expected_mapping_path;
+
+  std::string hand_config_path = ros::package::getPath("sr_hand_detector") + "/test/config";
+  std::string detected_hands_file = ros::package::getPath("sr_hand_detector") + "/test/config/test_bimanual.yaml";
+
+  sr_hand_detector::SrHandAutodetect sr_hand_autodetect(detected_hands_file, hand_config_path,
+                                                        sr_hand_detector::ForcedHandSide::right);
+  sr_hand_autodetect.run();
+  ASSERT_EQ(sr_hand_autodetect.get_command_suffix(), expected_command_suffix);
+}
+
 TEST(SrHandAutodetect, test_run_no_hands)
 {
   std::string expected_command_suffix = "";

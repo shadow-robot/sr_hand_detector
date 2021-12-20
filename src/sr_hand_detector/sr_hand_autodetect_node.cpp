@@ -19,15 +19,34 @@
 #include <ros/package.h>
 #include "sr_hand_detector/sr_hand_autodetect.h"
 
+namespace
+{
+  const std::string DETECTED_HANDS_FILE = "/tmp/sr_hand_detector.yaml";
+  const std::string HAND_CONFIG_PATH = "";
+}
+
 int main(int argc, char* argv[])
 {
-  system("sr_hand_detector_node");
+  int result = system("sr_hand_detector_node");
+  if (result != 0) return result;
 
-  sr_hand_detector::SrHandAutodetect sr_hand_autodetect;
-  sr_hand_autodetect.run();
+  int iter = 1;
+  std::string first_arg = argv[iter];
+  sr_hand_detector::ForcedHandSide forced_hand_side = sr_hand_detector::ForcedHandSide::none;
+
+  if (("--right-only" == first_arg) || ("-r" == first_arg))
+  {
+    forced_hand_side = sr_hand_detector::ForcedHandSide::right;
+    iter++;
+  }
+  else if (("--left-only" == first_arg) || ("-l" == first_arg))
+  {
+    forced_hand_side = sr_hand_detector::ForcedHandSide::left;
+    iter++;
+  }
 
   std::string command_string = "";
-  for (int i = 1; i < argc; i++)
+  for (int i = iter; i < argc; ++i)
   {
       command_string += argv[i];
       if (!(argc - 1 == i))
@@ -36,8 +55,12 @@ int main(int argc, char* argv[])
       }
   }
 
+  sr_hand_detector::SrHandAutodetect sr_hand_autodetect(DETECTED_HANDS_FILE,
+                                                        HAND_CONFIG_PATH,
+                                                        forced_hand_side);
+  sr_hand_autodetect.run();
+
   command_string += sr_hand_autodetect.get_command_suffix();
   std::cout << "Actual command run: " << command_string << std::endl;
-  system(command_string.c_str());
-  return 0;
+  return system(command_string.c_str());
 }

@@ -26,11 +26,15 @@
 
 namespace sr_hand_detector
 {
+
+enum class ForcedHandSide {none, right, left};
+
 class SrHandAutodetect
 {
   public:
     explicit SrHandAutodetect(std::string detected_hands_file = "/tmp/sr_hand_detector.yaml",
-                              std::string hand_config_path = "");
+                              std::string hand_config_path = "",
+                              ForcedHandSide forced_hand_side = ForcedHandSide::none);
     ~SrHandAutodetect();
     void run();
     std::string get_command_suffix();
@@ -39,6 +43,7 @@ class SrHandAutodetect
     void get_path_to_sr_hand_config();
     YAML::Node get_hand_general_info(int serial);
     void detect_hands();
+    void filter_hands_if_side_forced();
     void compose_command_suffix();
     void compose_command_suffix_unimanual();
     void compose_command_suffix_bimanual();
@@ -49,6 +54,7 @@ class SrHandAutodetect
     std::string command_suffix_bimanual_per_hand(const YAML::Node &hand_info);
     std::string hand_side_to_prefix(const std::string &side);
 
+    ForcedHandSide forced_hand_side_;
     int number_of_detected_hands_;
     std::string sr_hand_config_path_;
     std::string detected_hands_file_;

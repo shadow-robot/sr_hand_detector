@@ -27,8 +27,11 @@
 
 namespace sr_hand_detector
 {
-SrHandAutodetect::SrHandAutodetect(std::string detected_hands_file, std::string hand_config_path) :
-  detected_hands_file_(detected_hands_file)
+SrHandAutodetect::SrHandAutodetect(std::string detected_hands_file,
+                                   std::string hand_config_path,
+                                   ForcedHandSide forced_hand_side) :
+  detected_hands_file_(detected_hands_file),
+  forced_hand_side_(forced_hand_side)
 {
   if (hand_config_path.empty())
   {
@@ -56,6 +59,7 @@ void SrHandAutodetect::get_path_to_sr_hand_config()
 void SrHandAutodetect::run()
 {
   detect_hands();
+  filter_hands_if_side_forced();
   compose_command_suffix();
 }
 
@@ -85,6 +89,41 @@ void SrHandAutodetect::detect_hands()
   {
     hand_serial_and_port_map_.insert(std::pair<int, std::string>(it->first.as<int>(), it->second.as<std::string>()));
   }
+  number_of_detected_hands_ = hand_serial_and_port_map_.size();
+}
+
+void SrHandAutodetect::filter_hands_if_side_forced()
+{
+  if (ForcedHandSide::none == forced_hand_side_) return;
+
+  std::string side_to_remove_string;
+  switch (forced_hand_side_)
+  {
+    case ForcedHandSide::right:
+      side_to_remove_string = "left";
+      break;
+
+    case ForcedHandSide::left:
+      side_to_remove_string = "right";
+      break;
+
+    default:
+      throw std::runtime_error("sr_hand_autodetect: Unknown side to be forced");
+  }
+
+  for (auto it = hand_serial_and_port_map_.cbegin(); it != hand_serial_and_port_map_.cend(); /* no increment */)
+  {
+    auto detected_hand_side = get_hand_general_info(it->first)["side"].as<std::string>();
+    if (side_to_remove_string == detected_hand_side)
+    {
+      hand_serial_and_port_map_.erase(it++);
+    }
+    else
+    {
+      ++it;
+    }
+  }
+
   number_of_detected_hands_ = hand_serial_and_port_map_.size();
 }
 
